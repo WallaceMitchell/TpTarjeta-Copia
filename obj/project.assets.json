@@ -1,36 +1,36 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net8.0": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net8.0": []
   },
   "packageFolders": {
-    "/home/runner/Herencia/.cache/.nuget/packages/": {}
+    "/home/mausito/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/runner/Herencia/main.csproj",
+      "projectUniqueName": "/home/mausito/Documentos/AAT/TP tarjeta/main.csproj",
       "projectName": "main",
-      "projectPath": "/home/runner/Herencia/main.csproj",
-      "packagesPath": "/home/runner/Herencia/.cache/.nuget/packages/",
-      "outputPath": "/home/runner/Herencia/obj/",
+      "projectPath": "/home/mausito/Documentos/AAT/TP tarjeta/main.csproj",
+      "packagesPath": "/home/mausito/.nuget/packages/",
+      "outputPath": "/home/mausito/Documentos/AAT/TP tarjeta/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/runner/Herencia/.cache/.nuget/NuGet/NuGet.Config"
+        "/home/mausito/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "netcoreapp7.0"
+        "netcoreapp8.0"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "netcoreapp7.0",
+        "net8.0": {
+          "targetAlias": "netcoreapp8.0",
           "projectReferences": {}
         }
       },
@@ -41,8 +41,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "netcoreapp7.0",
+      "net8.0": {
+        "targetAlias": "netcoreapp8.0",
         "imports": [
           "net461",
           "net462",
@@ -59,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/nix/store/4k08ckhym1bcwnsk52j201a80l2xrkhp-dotnet-sdk-7.0.410/sdk/7.0.410/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.108/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

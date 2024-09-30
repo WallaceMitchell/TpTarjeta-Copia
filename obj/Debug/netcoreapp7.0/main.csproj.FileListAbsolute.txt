@@ -26,3 +26,18 @@
 /home/runner/Herencia/bin/Debug/netcoreapp7.0/main.pdb
 /home/runner/Herencia/obj/Debug/netcoreapp7.0/main.genruntimeconfig.cache
 /home/runner/Herencia/obj/Debug/netcoreapp7.0/ref/main.dll
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.GeneratedMSBuildEditorConfig.editorconfig
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.AssemblyInfoInputs.cache
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.AssemblyInfo.cs
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.csproj.CoreCompileInputs.cache
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.sourcelink.json
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.dll
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/refint/main.dll
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.pdb
+/home/mausito/Documentos/AAT/TP tarjeta/bin/Debug/netcoreapp7.0/main
+/home/mausito/Documentos/AAT/TP tarjeta/bin/Debug/netcoreapp7.0/main.deps.json
+/home/mausito/Documentos/AAT/TP tarjeta/bin/Debug/netcoreapp7.0/main.runtimeconfig.json
+/home/mausito/Documentos/AAT/TP tarjeta/bin/Debug/netcoreapp7.0/main.dll
+/home/mausito/Documentos/AAT/TP tarjeta/bin/Debug/netcoreapp7.0/main.pdb
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/main.genruntimeconfig.cache
+/home/mausito/Documentos/AAT/TP tarjeta/obj/Debug/netcoreapp7.0/ref/main.dll
