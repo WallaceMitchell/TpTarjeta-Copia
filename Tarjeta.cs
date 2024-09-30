@@ -1,14 +1,14 @@
 using System;
 
-public class Tarjeta {
+public abstract class Tarjeta {
 
   private static int id_generador = 1;
 
   private static double[] cargas_permitidas = {2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000};
   
-  private const double limite = -480.0;
+  protected double limite = -480.0;
   private int id;
-  private double saldo;  
+  protected double saldo;  
   public Tarjeta () {
 
     this.id = id_generador;
@@ -69,29 +69,14 @@ public class Tarjeta {
 
   }
 
-  public bool comprarPasaje (double precio) {
-
-    bool flag = false;
-    
-    if (this.saldo - precio >= limite) {
-
-      flag = true;
-      this.saldo -= precio;
-      
-    } else {
-    
-      Console.WriteLine("No dispone de suficiente saldo");
-      
-    }
-
-    return flag;
-    
-  }
-
   public double getSaldo() {
 
     return this.saldo;
     
   }
+
+  public abstract double getImporte (double precio_neto);
+
+  public abstract bool comprarPasaje (double precio);
    
 }
