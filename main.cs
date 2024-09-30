@@ -7,28 +7,27 @@ class Program {
 
     Colectivo colectivo = new Colectivo(1, "pot 212");
     
-    Tarjeta tarjeta = new Tarjeta();
-    Tarjeta tarjeta2 = new Tarjeta();
+    Tarjeta tarjeta1 = new TarjetaCompleta();
+    Tarjeta tarjeta2 = new TarjetaParcial();
 
-    tarjeta.addSaldo(5000);
-    tarjeta.addSaldo(2000);
+    tarjeta1.addSaldo(5000);
+    tarjeta2.addSaldo(5000);
 
-    for (int i = 0; i < 10; i++) {
+    Boleto? boleto1 = colectivo.pagarCon(tarjeta1);
+    Boleto? boleto2 = colectivo.pagarCon(tarjeta2);
 
-      Boleto? boleto = colectivo.pagarCon(tarjeta);
+    if (boleto1 is not null) {
 
-      if (boleto is not null) {
+      boleto1.showBoleto();
 
-        boleto.showBoleto();
-
-      } else {
-  
-        Console.WriteLine("Boleto no generado");
-        
-      }
-      
     }
-    
+
+    if (boleto2 is not null) {
+
+      boleto2.showBoleto();
+
+    }
+
   }  
   
 }

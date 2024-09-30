@@ -21,7 +21,7 @@ public class Colectivo {
 
     if (comprado) {
 
-      return new Boleto(precio_pasaje, tarjeta.getSaldo());
+      return new Boleto(tarjeta.getImporte(precio_pasaje), tarjeta.getSaldo());
       
     } else {
 
