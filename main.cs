@@ -10,9 +10,8 @@ class Program {
     Tarjeta tarjeta = new Tarjeta();
     Tarjeta tarjeta2 = new Tarjeta();
 
-    tarjeta.addSaldo(10000);
     tarjeta.addSaldo(5000);
-    tarjeta.addSaldo(5000);
+    tarjeta.addSaldo(2000);
 
     for (int i = 0; i < 10; i++) {
 
