@@ -17,21 +17,54 @@ public class TarjetaParcial : Tarjeta {
 
     }
 
+    private bool enCooldown () {
+
+      DateTime? last_viaje = base.getLastViaje();
+
+      if (last_viaje is not null) {
+
+        TimeSpan diferencia = DateTime.Now - (DateTime) last_viaje;
+
+        return diferencia.TotalMinutes > base.maxCooldown;
+
+      } else {
+
+        return true;
+
+      }
+
+    }
+
     public override bool comprarPasaje (double precio) {
 
     bool flag = false;
     
     double precio_final = getImporte(precio);
 
-    if (base.saldo - precio_final >= base.limite) {
+    if (enCooldown()) {
 
-      flag = true;
-      base.saldo -= precio_final;
+      if (base.saldo - precio_final >= base.limite) {
+
+        flag = true;
+        base.saldo -= precio_final;
+        base.setLastViaje(DateTime.Now);
+
+        if (base.saldo < 0) {
+
+          base.saldo_negativo = true;
+
+        }
+        
+      } else {
       
+        Console.WriteLine("No dispone de suficiente saldo\n");
+        
+      }
+
     } else {
-    
-      Console.WriteLine("No dispone de suficiente saldo");
-      
+
+      Console.WriteLine("Debe esperar más de " + (int) base.maxCooldown + " minutos entre viajes\n");
+
     }
 
     return flag;
