@@ -9,7 +9,7 @@ public abstract class Tarjeta {
   
   protected double max_saldo = 36000;
   protected double limite = -480.0;
-  protected double maxCooldown = 5.0;
+  protected double maxCooldown = 0.0;
   private int id;
   protected string tipo;
   protected double saldo = 0.0;  
@@ -115,8 +115,8 @@ public abstract class Tarjeta {
 
   }
 
-  public abstract double getImporte (double precio_neto);
+  public abstract double getImporte (double precio_neto, bool boleto_gratuito);
 
-  public abstract bool comprarPasaje (double precio);
+  public abstract bool comprarPasaje (double precio, ref bool boleto_gratuito);
    
 }

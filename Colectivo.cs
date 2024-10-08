@@ -17,13 +17,13 @@ public class Colectivo {
     
   }
 
-  public Boleto? pagarCon (Tarjeta tarjeta) {
+  public Boleto? pagarCon (Tarjeta tarjeta, bool boleto_gratuito) {
 
-    bool comprado = tarjeta.comprarPasaje(precio_pasaje);
+    bool comprado = tarjeta.comprarPasaje(precio_pasaje, ref boleto_gratuito);
 
     if (comprado) {
 
-      return new Boleto(tarjeta, tarjeta.getImporte(precio_pasaje), tarjeta.getSaldo());
+      return new Boleto(tarjeta, tarjeta.getImporte(precio_pasaje, boleto_gratuito), tarjeta.getSaldo(), boleto_gratuito);
       
     } else {
 

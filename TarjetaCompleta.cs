@@ -11,17 +11,19 @@ public class TarjetaCompleta : Tarjeta {
 
   }
 
-  public override double getImporte (double precio_neto) {
+  public override double getImporte (double precio_neto, bool boleto_gratuito) {
 
     return precio_neto * factor;
 
   }
 
-  public override bool comprarPasaje (double precio) {
+  public override bool comprarPasaje (double precio, ref bool boleto_gratuito) {
 
     bool flag = false;
-    
-    double precio_final = getImporte(precio);
+
+    boleto_gratuito = false;
+
+    double precio_final = getImporte(precio, boleto_gratuito);
 
     if (base.saldo - precio_final >= base.limite) {
 
