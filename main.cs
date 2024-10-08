@@ -7,7 +7,7 @@ class Program {
 
     Colectivo colectivo = new Colectivo(1, "2A", "pot 212");
     
-    Tarjeta tarjeta1 = new TarjetaCompleta();
+    Tarjeta tarjeta1 = new TarjetaParcial();
     Tarjeta tarjeta2 = new TarjetaParcial();
 
     tarjeta1.addSaldo(7000);

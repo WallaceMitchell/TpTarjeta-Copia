@@ -7,10 +7,13 @@ public abstract class Tarjeta {
   private static double[] cargas_permitidas = {2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000};
   
   protected double limite = -480.0;
+  protected double maxCooldown = 5.0;
   private int id;
   protected string tipo;
   protected double saldo;  
   protected bool saldo_negativo;
+  protected DateTime? last_viaje = null;
+
   public Tarjeta () {
 
     this.id = id_generador;
@@ -93,6 +96,18 @@ public abstract class Tarjeta {
   public void setNegativo(bool negativo) {
 
     this.saldo_negativo = negativo;
+
+  }
+
+  public DateTime? getLastViaje() {
+
+    return this.last_viaje;
+
+  }
+
+  public void setLastViaje (DateTime? fecha) {
+
+    this.last_viaje = fecha;
 
   }
 

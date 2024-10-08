@@ -27,6 +27,7 @@ public class TarjetaCompleta : Tarjeta {
 
       flag = true;
       base.saldo -= precio_final;
+      base.setLastViaje(DateTime.Now);
 
       if (base.saldo < 0) {
 
