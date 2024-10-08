@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 public abstract class Tarjeta {
 
@@ -6,11 +7,13 @@ public abstract class Tarjeta {
 
   private static double[] cargas_permitidas = {2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000};
   
+  protected double max_saldo = 36000;
   protected double limite = -480.0;
   protected double maxCooldown = 5.0;
   private int id;
   protected string tipo;
-  protected double saldo;  
+  protected double saldo = 0.0;  
+  protected double excedente = 0.0;
   protected bool saldo_negativo;
   protected DateTime? last_viaje = null;
 
@@ -45,20 +48,19 @@ public abstract class Tarjeta {
 
     if (permitido) {
 
-      double saldo_resultante = this.saldo + saldo;
-      
-      if (saldo_resultante <= 9900) { 
+      double new_saldo = this.saldo + excedente + saldo;
 
-        this.saldo = saldo_resultante;
-        
-        Console.WriteLine("Se han ingresado con éxito $" + saldo + " en la tarjeta " + this.id);
-        
-      } else {
+      if (new_saldo > this.max_saldo) {
 
-        Console.WriteLine("El máximo de saldo es 9900, no se pudo concretar la operación");
-        
-      }
-      
+        excedente = new_saldo - this.max_saldo;
+        new_saldo = this.max_saldo;
+
+      }      
+
+      this.saldo = new_saldo;
+
+      Console.WriteLine("Carga exitosa");
+
     } else {
       
       Console.WriteLine("Ha ingresado una carga inválida, no se pudo concretar la operación");
@@ -71,7 +73,9 @@ public abstract class Tarjeta {
 
   public void showSaldo () {
 
-    Console.WriteLine("Saldo actual: " + this.saldo);
+    Console.WriteLine("\n----------------------------------------------------");
+    Console.WriteLine("Saldo actual: " + this.saldo + " (Excedente: " + this.excedente + ")");
+    Console.WriteLine("----------------------------------------------------\n");
 
   }
 
