@@ -8,12 +8,15 @@ public abstract class Tarjeta {
   
   protected double limite = -480.0;
   private int id;
+  protected string tipo;
   protected double saldo;  
+  protected bool saldo_negativo;
   public Tarjeta () {
 
     this.id = id_generador;
     id_generador += 1;
     this.saldo = 0;
+    this.tipo = "";
     
   }
   
@@ -73,6 +76,24 @@ public abstract class Tarjeta {
 
     return this.saldo;
     
+  }
+
+  public string getTipo() {
+
+    return this.tipo;
+
+  }
+
+  public bool isNegativo() {
+
+    return this.saldo_negativo;
+
+  }
+
+  public void setNegativo(bool negativo) {
+
+    this.saldo_negativo = negativo;
+
   }
 
   public abstract double getImporte (double precio_neto);

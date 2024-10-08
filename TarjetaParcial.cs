@@ -7,6 +7,8 @@ public class TarjetaParcial : Tarjeta {
 
     public TarjetaParcial () : base() {
 
+      base.tipo = "Tarjeta Parcial";
+
     }
 
     public override double getImporte (double precio_neto) {
