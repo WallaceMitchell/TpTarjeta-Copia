@@ -6,6 +6,7 @@ public class Boleto {
 
   private static int id_generador = 1;
   private int id;
+  private bool interurbana;
   private int id_de_tarjeta;
   private string tipo_de_tarjeta;
   private double importe;
@@ -13,9 +14,10 @@ public class Boleto {
   private double excedente;
   private DateTime fecha;
 
-  public Boleto (Tarjeta tarjeta, double importe, double saldo, double excedente) {
+  public Boleto (Tarjeta tarjeta, bool interurbana, double importe, double saldo, double excedente) {
 
     this.id = id_generador;
+    this.interurbana = interurbana;
     id_generador += 1;
     this.id_de_tarjeta = tarjeta.getId();
     this.tipo_de_tarjeta = tarjeta.getTipo();
@@ -47,7 +49,18 @@ public class Boleto {
   public void showBoleto () {
 
     Console.WriteLine("\n----------------------------------------------------");
-    Console.WriteLine("Boleto " + this.id + "\n");
+
+    if (this.interurbana) {
+      
+      Console.WriteLine("Boleto " + this.id + " (Interurbano)\n");
+
+    } else {
+
+      Console.WriteLine("Boleto " + this.id + " (Urbano)\n");
+
+    }
+
+    
 
     Console.WriteLine("Fecha: " + this.fecha + "\n");
 
