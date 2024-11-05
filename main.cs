@@ -5,45 +5,30 @@ class Program {
 
   static void Main () {
 
+    TiempoFalso tiempo = new TiempoFalso();
+
     Colectivo colectivo = new Colectivo(1, "2A", "pot 212");
     
-    Tarjeta tarjeta1 = new TarjetaParcial();
+    Tarjeta tarjeta1 = new TarjetaParcial(tiempo);
 
-    tarjeta1.addSaldo(2000);
+    for (int i = 0; i < 100; i++) {
 
-    Boleto? boleto1 = colectivo.pagarCon(tarjeta1, false);
-    Boleto? boleto2 = colectivo.pagarCon(tarjeta1, true);
-    Boleto? boleto3 = colectivo.pagarCon(tarjeta1, true);
-    Boleto? boleto4 = colectivo.pagarCon(tarjeta1, false);
-    Boleto? boleto5 = colectivo.pagarCon(tarjeta1, true);
-
-    if (boleto1 is not null) {
-
-      boleto1.showBoleto();
+      tarjeta1.addSaldo(9000);
 
     }
 
-    if (boleto2 is not null) {
+    for (int i = 0; i < 100; i++) {
 
-      boleto2.showBoleto();
+      Boleto? boleto = colectivo.pagarCon(tarjeta1);
 
-    }
+      if (boleto is not null) {
 
-    if (boleto3 is not null) {
+        boleto.showBoleto();
 
-      boleto3.showBoleto();
+      }
 
-    }
-
-    if (boleto4 is not null) {
-
-      boleto4.showBoleto();
-
-    }
-
-    if (boleto5 is not null) {
-
-      boleto5.showBoleto();
+      tiempo.addHours(3);
+      tiempo.addMinutes(0);
 
     }
 

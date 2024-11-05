@@ -1,28 +1,33 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-public abstract class Tarjeta {
+public class Tarjeta {
 
   private static int id_generador = 1;
-
   private static double[] cargas_permitidas = {2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000};
-  
   protected double max_saldo = 36000;
   protected double limite = -480.0;
   protected double maxCooldown = 0.0;
-  private int id;
+  protected int id;
   protected string tipo;
-  protected double saldo = 0.0;  
+  protected double saldo = 0.0;
   protected double excedente = 0.0;
+  protected double importe;
   protected bool saldo_negativo;
-  protected DateTime? last_viaje = null;
+  protected double factor;
+  protected Frecuente registro_viaje_frecuente;
+  protected Tiempo tiempo;
+  protected DateTime? ultimo_viaje;
 
-  public Tarjeta () {
+  public Tarjeta (Tiempo tiempo) {
 
     this.id = id_generador;
     id_generador += 1;
-    this.saldo = 0;
+    this.saldo = 0.0;
+    this.factor = 1.0;
     this.tipo = "";
+    this.tiempo = tiempo;
+    this.registro_viaje_frecuente = new Frecuente(this.tiempo.now().Month, 0);
     
   }
   
@@ -31,46 +36,65 @@ public abstract class Tarjeta {
     return this.id;
     
   }
-  
-  public void addSaldo (double saldo) {
+  public bool isCompleta () {
+
+    return this.tipo == "Tarjeta Completa";
+
+  }
+  public bool isParcial () {
+
+    return this.tipo == "Tarjeta Parcial";
+
+  }
+  private bool checkCarga (double saldo) {
 
     bool permitido = false;
-    
+
     for (int i = 0; i < cargas_permitidas.Length; i++) {
 
       if (saldo == cargas_permitidas[i]) {
 
         permitido = true;
-        
+
       }
-      
+
     }
 
-    if (permitido) {
+    if (!permitido) {
 
-      double new_saldo = this.saldo + excedente + saldo;
+      Console.WriteLine("Ha ingresado una carga inválida, no se pudo concretar la operación");
 
-      if (new_saldo > this.max_saldo) {
+    }
 
-        excedente = new_saldo - this.max_saldo;
-        new_saldo = this.max_saldo;
+    return permitido;
 
-      }      
+  }
+  private bool franjaHoraria () {
 
-      this.saldo = new_saldo;
+    DateTime hoy6hs = this.tiempo.now().Date.AddHours(6);
+    DateTime hoy22hs = this.tiempo.now().Date.AddHours(22);
 
-      Console.WriteLine("Carga exitosa");
+    return (this.tiempo.now() >= hoy6hs) && (this.tiempo.now() <= hoy22hs);
+
+  }
+  private double manageNewSaldo (double saldo) {
+
+    double new_saldo = this.saldo + excedente + saldo;
+
+    if (new_saldo >= this.max_saldo) {
+
+      excedente = new_saldo - this.max_saldo;
+      new_saldo = this.max_saldo;
 
     } else {
-      
-      Console.WriteLine("Ha ingresado una carga inválida, no se pudo concretar la operación");
-      
+
+      excedente = 0.0;
+
     }
 
-    this.showSaldo();
-    
-  }
+    return new_saldo;      
 
+  }
   public void showSaldo () {
 
     Console.WriteLine("\n----------------------------------------------------");
@@ -78,45 +102,126 @@ public abstract class Tarjeta {
     Console.WriteLine("----------------------------------------------------\n");
 
   }
-
   public double getSaldo() {
 
     return this.saldo;
     
   }
+  public double getExcedente() {
 
+    return this.excedente;
+
+  }
   public string getTipo() {
 
     return this.tipo;
 
   }
+  public Tiempo getTiempo() {
 
+    return this.tiempo;
+
+  }
+  public double getDescuento() {
+
+    return this.registro_viaje_frecuente.getDescuento(this.tiempo.now().Month);
+
+  }
+  public double getImporte() {
+
+    return this.importe;
+
+  }
   public bool isNegativo() {
 
     return this.saldo_negativo;
 
   }
-
   public void setNegativo(bool negativo) {
 
     this.saldo_negativo = negativo;
 
   }
+  public void addSaldo (double saldo) {
 
-  public DateTime? getLastViaje() {
+    if (checkCarga(saldo)) {
 
-    return this.last_viaje;
+      this.saldo = manageNewSaldo(saldo);
+      this.showSaldo();
+
+      Console.WriteLine("Carga exitosa");
+    
+    }
 
   }
+  public double getImporte (double precio_neto) {
 
-  public void setLastViaje (DateTime? fecha) {
+    double factor = this.factor;
 
-    this.last_viaje = fecha;
+    if (!franjaHoraria()) {
+
+      factor = 1.0;
+
+    } else {
+
+      if ((this is TarjetaCompleta tarjetaCompleta) && tarjetaCompleta.ViajeGratuito()) {
+
+        factor = 0.0;
+
+      }
+
+      if ((this is TarjetaParcial tarjetaParcial) && !tarjetaParcial.viajeParcial()) {
+
+        factor = 1.0;
+
+      } 
+
+    }
+
+    if (this is not TarjetaCompleta tc && this is not TarjetaParcial tp) {
+
+      factor = this.getDescuento();
+
+    }
+
+    return this.importe = precio_neto * factor;
 
   }
+  public bool comprarPasaje (double precio) {
 
-  public abstract double getImporte (double precio_neto, bool boleto_gratuito);
+    double precio_final = getImporte(precio);
 
-  public abstract bool comprarPasaje (double precio, ref bool boleto_gratuito);
+    bool flag = false;
+
+    if (saldo - precio_final >= limite) {
+
+      if ((this is TarjetaParcial tarjetaParcial) && !tarjetaParcial.hasCooldownElapsed()) {
+
+        Console.WriteLine("En tarjetas parciales debe esperar 5 minutos entre operaciones");
+
+      } else {
+
+        flag = true;
+        saldo = manageNewSaldo(-precio_final);
+
+        if (saldo < 0) {
+
+          saldo_negativo = true;
+
+        }
+
+        this.ultimo_viaje = tiempo.now();
+
+      }
+      
+    } else {
+    
+      Console.WriteLine("No dispone de suficiente saldo");
+      
+    }
+
+    return flag;
+    
+  }
    
 }

@@ -3,7 +3,7 @@ using System;
 
 public class Colectivo {
 
-  private static double precio_pasaje = 940;
+  private static double precio_pasaje = 1200.0;
   
   private int id;
   private string linea;
@@ -17,13 +17,13 @@ public class Colectivo {
     
   }
 
-  public Boleto? pagarCon (Tarjeta tarjeta, bool boleto_gratuito) {
+  public Boleto? pagarCon (Tarjeta tarjeta) {
 
-    bool comprado = tarjeta.comprarPasaje(precio_pasaje, ref boleto_gratuito);
+    bool comprado = tarjeta.comprarPasaje(precio_pasaje);
 
     if (comprado) {
 
-      return new Boleto(tarjeta, tarjeta.getImporte(precio_pasaje, boleto_gratuito), tarjeta.getSaldo(), boleto_gratuito);
+      return new Boleto(tarjeta, tarjeta.getImporte(), tarjeta.getSaldo(), tarjeta.getExcedente());
       
     } else {
 
