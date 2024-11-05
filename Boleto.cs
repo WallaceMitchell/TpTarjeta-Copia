@@ -10,11 +10,10 @@ public class Boleto {
   private string tipo_de_tarjeta;
   private double importe;
   private double saldo;
+  private double excedente;
   private DateTime fecha;
-  private bool boleto_gratuito;
-  private bool salir_de_negativo = false;
-  
-  public Boleto (Tarjeta tarjeta, double importe, double saldo, bool boleto_gratuito) {
+
+  public Boleto (Tarjeta tarjeta, double importe, double saldo, double excedente) {
 
     this.id = id_generador;
     id_generador += 1;
@@ -22,15 +21,8 @@ public class Boleto {
     this.tipo_de_tarjeta = tarjeta.getTipo();
     this.importe = importe;
     this.saldo = saldo;
-    this.fecha = DateTime.Now;
-    this.boleto_gratuito = boleto_gratuito;
-
-    if (tarjeta.isNegativo() && (tarjeta.getSaldo() > 0)) {
-
-        tarjeta.setNegativo(false);
-        this.salir_de_negativo = true;
-
-    }
+    this.excedente = excedente;
+    this.fecha = tarjeta.getTiempo().now();
     
   }
 
@@ -62,19 +54,7 @@ public class Boleto {
     Console.WriteLine("Tarjeta: " + this.id_de_tarjeta + ", " + this.tipo_de_tarjeta);
 
     Console.WriteLine("Importe: " + this.importe);
-    Console.WriteLine("Saldo restante: " + this.saldo);
-
-    if (this.boleto_gratuito) {
-
-      Console.WriteLine("\n(Boleto gratuito)\n");
-
-    }
-
-    if (this.salir_de_negativo) {
-
-      Console.WriteLine("\nSaldo negativo cancelado");
-
-    }
+    Console.WriteLine("Saldo restante: " + this.saldo + " (Excedente: " + this.excedente + ")");
 
     Console.WriteLine("----------------------------------------------------\n");
     
