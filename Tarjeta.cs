@@ -14,6 +14,7 @@ public class Tarjeta {
   protected double excedente = 0.0;
   protected double importe;
   protected bool saldo_negativo;
+  protected bool informe_negativo;
   protected double factor;
   protected Frecuente registro_viaje_frecuente;
   protected Tiempo tiempo;
@@ -25,7 +26,7 @@ public class Tarjeta {
     id_generador += 1;
     this.saldo = 0.0;
     this.factor = 1.0;
-    this.tipo = "";
+    this.tipo = "Tarjeta Normal";
     this.tiempo = tiempo;
     this.registro_viaje_frecuente = new Frecuente(this.tiempo.now().Month, 0);
     
@@ -67,6 +68,16 @@ public class Tarjeta {
     }
 
     return permitido;
+
+  }
+  private void toggleInformeNegativo () {
+
+    this.informe_negativo = this.saldo_negativo && !(this.isNegativo());
+    
+  }
+  public bool getInformeNegativo () {
+
+    return this.informe_negativo;
 
   }
   private bool franjaHoraria () {
@@ -134,7 +145,7 @@ public class Tarjeta {
   }
   public bool isNegativo() {
 
-    return this.saldo_negativo;
+    return this.saldo < 0;
 
   }
   public void setNegativo(bool negativo) {
@@ -164,13 +175,13 @@ public class Tarjeta {
 
     } else {
 
-      if ((this is TarjetaCompleta tarjetaCompleta) && tarjetaCompleta.ViajeGratuito()) {
+      if ((this is TarjetaCompleta tarjetaCompleta) && !tarjetaCompleta.ViajeGratuito()) {
 
-        factor = 0.0;
+        factor = 1.0;
 
       }
 
-      if ((this is TarjetaParcial tarjetaParcial) && !tarjetaParcial.viajeParcial()) {
+      if ((this is TarjetaParcial tarjetaParcial) && !tarjetaParcial.ViajeParcial()) {
 
         factor = 1.0;
 
@@ -178,7 +189,7 @@ public class Tarjeta {
 
     }
 
-    if (this is not TarjetaCompleta tc && this is not TarjetaParcial tp) {
+    if (this is not TarjetaCompleta tc && this is not TarjetaParcial tp && this is not TarjetaGratuita tg) {
 
       factor = this.getDescuento();
 
@@ -191,8 +202,6 @@ public class Tarjeta {
 
     double precio_final = getImporte(precio);
 
-    bool flag = false;
-
     if (saldo - precio_final >= limite) {
 
       if ((this is TarjetaParcial tarjetaParcial) && !tarjetaParcial.hasCooldownElapsed()) {
@@ -201,16 +210,13 @@ public class Tarjeta {
 
       } else {
 
-        flag = true;
         saldo = manageNewSaldo(-precio_final);
 
-        if (saldo < 0) {
-
-          saldo_negativo = true;
-
-        }
-
+        bool negativo_question = isNegativo();
+        toggleInformeNegativo();
+        this.saldo_negativo = negativo_question;
         this.ultimo_viaje = tiempo.now();
+        return true;
 
       }
       
@@ -220,7 +226,7 @@ public class Tarjeta {
       
     }
 
-    return flag;
+    return false;
     
   }
    

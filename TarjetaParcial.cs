@@ -13,7 +13,7 @@ public class TarjetaParcial : Tarjeta {
 
   }
 
-  public bool viajeParcial () {
+  public bool ViajeParcial () {
 
     return rv.MakeViaje(tiempo.now().Date);
 

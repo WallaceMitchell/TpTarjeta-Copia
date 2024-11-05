@@ -1,6 +1,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Security.AccessControl;
 
 public class Boleto {
 
@@ -12,6 +13,7 @@ public class Boleto {
   private double importe;
   private double saldo;
   private double excedente;
+  private bool informe_negativo;
   private DateTime fecha;
 
   public Boleto (Tarjeta tarjeta, bool interurbana, double importe, double saldo, double excedente) {
@@ -24,6 +26,7 @@ public class Boleto {
     this.importe = importe;
     this.saldo = saldo;
     this.excedente = excedente;
+    this.informe_negativo = tarjeta.getInformeNegativo();
     this.fecha = tarjeta.getTiempo().now();
     
   }
@@ -60,14 +63,18 @@ public class Boleto {
 
     }
 
-    
-
     Console.WriteLine("Fecha: " + this.fecha + "\n");
 
     Console.WriteLine("Tarjeta: " + this.id_de_tarjeta + ", " + this.tipo_de_tarjeta);
 
     Console.WriteLine("Importe: " + this.importe);
     Console.WriteLine("Saldo restante: " + this.saldo + " (Excedente: " + this.excedente + ")");
+
+    if (this.informe_negativo) {
+
+      Console.WriteLine("(Saldo negativo cancelado)");
+
+    }
 
     Console.WriteLine("----------------------------------------------------\n");
     
