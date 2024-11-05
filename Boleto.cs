@@ -37,6 +37,42 @@ public class Boleto {
     
   }
 
+  public bool getInterurbana () {
+
+    return this.interurbana;
+
+  }
+
+  public int getIdDeTarjeta () {
+
+    return this.id_de_tarjeta;
+
+  }
+
+  public string getTipoDeTarjeta () {
+
+    return this.tipo_de_tarjeta;
+
+  }
+
+  public double getExcedente () {
+
+    return this.excedente;
+
+  }
+
+  public DateTime getFecha () {
+
+    return this.fecha;
+
+  }
+
+  public bool getInformeNegativo () {
+
+    return this.getInformeNegativo();
+
+  }
+
   public double getImporte () {
 
     return this.importe;

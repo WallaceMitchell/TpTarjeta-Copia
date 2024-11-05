@@ -3,17 +3,19 @@ using System;
 
 class Program {
 
-  static void Main () {
+  public static void Main () {
 
     TiempoFalso tiempo = new TiempoFalso();
 
     Colectivo colectivo = new Colectivo(1, "2A", "pot 212");
     
-    Tarjeta tarjeta = new TarjetaGratuita(tiempo);
+    Tarjeta tarjeta = new TarjetaCompleta(tiempo);
 
-    tarjeta.addSaldo(8000);
+    tiempo.addHours(8);
 
-    for (int i = 0; i < 10; i++) {
+    tarjeta.addSaldo(2000);
+
+    for (int i = 0; i < 3; i++) {
 
       Boleto? boleto = colectivo.pagarCon(tarjeta, false);
 
@@ -23,10 +25,7 @@ class Program {
 
       }
 
-      tiempo.addHours(4);
-
     }
-    
 
   }
   
