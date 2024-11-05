@@ -9,7 +9,7 @@ class Program {
 
     Colectivo colectivo = new Colectivo(1, "2A", "pot 212");
     
-    Tarjeta tarjeta1 = new TarjetaParcial(tiempo);
+    Tarjeta tarjeta1 = new TarjetaCompleta(tiempo);
 
     for (int i = 0; i < 100; i++) {
 
@@ -19,7 +19,7 @@ class Program {
 
     for (int i = 0; i < 100; i++) {
 
-      Boleto? boleto = colectivo.pagarCon(tarjeta1);
+      Boleto? boleto = colectivo.pagarCon(tarjeta1, true);
 
       if (boleto is not null) {
 
