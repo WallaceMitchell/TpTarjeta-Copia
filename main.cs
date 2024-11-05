@@ -9,17 +9,13 @@ class Program {
 
     Colectivo colectivo = new Colectivo(1, "2A", "pot 212");
     
-    Tarjeta tarjeta1 = new TarjetaCompleta(tiempo);
+    Tarjeta tarjeta = new TarjetaGratuita(tiempo);
 
-    for (int i = 0; i < 100; i++) {
+    tarjeta.addSaldo(8000);
 
-      tarjeta1.addSaldo(9000);
+    for (int i = 0; i < 10; i++) {
 
-    }
-
-    for (int i = 0; i < 100; i++) {
-
-      Boleto? boleto = colectivo.pagarCon(tarjeta1, true);
+      Boleto? boleto = colectivo.pagarCon(tarjeta, false);
 
       if (boleto is not null) {
 
@@ -27,11 +23,11 @@ class Program {
 
       }
 
-      tiempo.addHours(3);
-      tiempo.addMinutes(0);
+      tiempo.addHours(4);
 
     }
+    
 
-  }  
+  }
   
 }

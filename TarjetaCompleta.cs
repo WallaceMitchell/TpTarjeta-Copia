@@ -8,7 +8,7 @@ public class TarjetaCompleta : Tarjeta {
   public TarjetaCompleta (Tiempo tiempo) : base(tiempo) {
 
     base.tipo = "Tarjeta Completa";
-    base.factor = 1.0;
+    base.factor = 0.0;
     rv = new RegistroViaje(this.tiempo.now().Date, 0, 2);
 
   }
